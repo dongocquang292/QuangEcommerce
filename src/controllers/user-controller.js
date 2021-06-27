@@ -8,8 +8,10 @@ dotenv.config();
 const registerUser = async (req, res) => {
     try {
         const email = req.body.email;
+
         const findUser = await User.findOne(req.body, { where: { email: email } });
-        if (email != findUser) {
+        console.log(findUser);
+        if (email !== findUser) {
             const user = {
                 username: req.body.username,
                 email: req.body.email,
@@ -40,7 +42,7 @@ const getUser = async (req, res) => {
 const getUserId = async (req, res) => {
     const id = req.params.id;
     try {
-        const user = await User.findOne(req.body, { where: { id: id } });
+        const user = await User.findByPK({ where: { id: id } });
         res.send(user)
     } catch (error) {
         res.send(error);
@@ -63,8 +65,8 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const id = req.params.id;
     try {
-        const user = await User.findOne(req.body, { where: { id: id } });
-        await user.destroy();
+        // const user = await User.findByPK(id);
+        await user.destroy({ where: { id: id } });
         res.send("Da xoa")
 
     } catch (error) {

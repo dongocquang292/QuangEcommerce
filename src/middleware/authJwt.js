@@ -14,4 +14,9 @@ const verifyToken = async (req, res, next) => {
     }
 }
 
+// const endcodedToke = async(email) => {
+//     return jwt.sign({
+
+//     });
+// }
 module.exports = { verifyToken: verifyToken }
