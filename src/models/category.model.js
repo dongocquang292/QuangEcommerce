@@ -1,8 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
     const Category = sequelize.define("category", {
         id: {
-            type: Sequelize.UUID,
-            defaultValue: Sequelize.UUIDV4,
+            type: Sequelize.INTEGER,
             allowNull: false,
             primaryKey: true
         },

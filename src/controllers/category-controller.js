@@ -7,12 +7,20 @@ dotenv.config();
 
 const createCategory = async (req, res) => {
     try {
-        const category = {
-            categoryName: req.body.categoryName,
-            status: req.body.status
+        const categoryName = req.body.categoryName;
+        const findCategory = await Category.findOne({ where: { categoryName: categoryName } });
+        if (!findCategory) {
+            const category = {
+                id: req.body.id,
+                categoryName: req.body.categoryName,
+                status: req.body.status
+            }
+            const createCate = await Category.create(category);
+            res.send(createCate)
+        } else {
+            res.send("da ton tai category")
         }
-        const createCate = await Category.create(category);
-        res.json(createCate)
+        console.log(12);
     } catch (error) {
         return res.send("Khong tao duoc Category")
     }
@@ -31,31 +39,32 @@ const getCategory = async (req, res) => {
 const getCategoryId = async (req, res) => {
     try {
         const id = req.params.id;
-        const category = await Category.findOne(req.body, { where: { id: id } });
+        const category = await Category.findOne({ where: { id: id } });
         res.send(category)
     } catch (error) {
         res.send(error);
     }
 };
 
-const updateUser = async (req, res) => {
-    const id = req.params.id;
+const updateCategory = async (req, res) => {
     try {
-        const user = await User.findOne(req.body, { where: { id: id } });
-        await user.update(req.body, { where: { id: id } });
-        res.send(user);
+        const id = req.params.id;
+        const category = {
+            categoryName: req.body.categoryName,
+            status: req.body.status
+        }
+        const update = await Category.update(category, { where: { id: id } });
+        res.send("update thanh cong");
 
     } catch (error) {
-        console.log(error);
         res.send(error);
     }
 }
 
-const deleteUser = async (req, res) => {
-    const id = req.params.id;
+const deleteCategory = async (req, res) => {
     try {
-        const user = await User.findByPK(req.body, { where: { id: id } });
-        await user.destroy();
+        const id = req.params.id;
+        await Category.destroy({ where: { id: id } });
         res.send("Da xoa")
 
     } catch (error) {
@@ -64,5 +73,5 @@ const deleteUser = async (req, res) => {
 }
 
 module.exports = {
-    createCategory, getCategory, getCategoryId
+    createCategory, getCategory, getCategoryId, updateCategory, deleteCategory
 }

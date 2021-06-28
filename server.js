@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
 const userRoute = require("./src/routes/user.route");
-const categoryRoute = require('./src/routes/category.route')
+const categoryRoute = require('./src/routes/category.route');
+const itemRoute = require("./src/routes/item.route");
+const orderRoute = require("./src/routes/order.route");
 app.use(express.json());
 
 
@@ -14,6 +16,8 @@ db.sequelize.sync();
 
 app.use('/user', userRoute)
 app.use('/category', categoryRoute);
+app.use('/item', itemRoute);
+app.use('/order', orderRoute);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

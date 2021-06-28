@@ -13,5 +13,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.user = require("./user.model")(sequelize, Sequelize);
-db.category = require('./category.model')(sequelize, Sequelize)
+db.category = require('./category.model')(sequelize, Sequelize);
+db.item = require('./item.model')(sequelize, Sequelize);
+// db.order = require('./order.model')(sequelize, Sequelize);
 module.exports = db;

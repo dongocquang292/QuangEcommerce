@@ -8,11 +8,10 @@ dotenv.config();
 const registerUser = async (req, res) => {
     try {
         const email = req.body.email;
-
-        const findUser = await User.findOne(req.body, { where: { email: email } });
-        console.log(findUser);
-        if (email !== findUser) {
+        const findUser = await User.findOne({ where: { email: email } });
+        if (!findUser) {
             const user = {
+                id: req.body.id,
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
@@ -40,9 +39,10 @@ const getUser = async (req, res) => {
 }
 
 const getUserId = async (req, res) => {
-    const id = req.params.id;
+
     try {
-        const user = await User.findByPK({ where: { id: id } });
+        const id = req.params.id;
+        const user = await User.findOne({ where: { id: id } });
         res.send(user)
     } catch (error) {
         res.send(error);
@@ -50,23 +50,27 @@ const getUserId = async (req, res) => {
 };
 
 const updateUser = async (req, res) => {
-    const id = req.params.id;
     try {
-        const user = await User.findOne(req.body, { where: { id: id } });
-        await user.update(req.body, { where: { id: id } });
-        res.send(user);
+        const id = req.params.id;
+        const user = {
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+            address: req.body.address,
+            phonenumber: req.body.phonenumber,
+        }
+        const update = await User.update(user, { where: { id: id } });
+        res.send("update thanh cong");
 
     } catch (error) {
-        console.log(error);
         res.send(error);
     }
 }
 
 const deleteUser = async (req, res) => {
-    const id = req.params.id;
     try {
-        // const user = await User.findByPK(id);
-        await user.destroy({ where: { id: id } });
+        const id = req.params.id;
+        await User.destroy({ where: { id: id } });
         res.send("Da xoa")
 
     } catch (error) {
@@ -79,11 +83,11 @@ const loginUser = async (req, res) => {
     try {
         const email = req.body.email;
         const password = req.body.password;
-        const user = await User.findOne(req.body, { where: { email: email } });
+        const user = await User.findOne({ where: { email: email } });
         if (!user) {
             return res.status(404).send({ message: "User khong ton tai" });
         }
-        // const match = await bcrypt.compareSync(req.body.password, user.password);
+        // const match =  bcrypt.compareSync(req.body.password, user.password);
         // console.log(match)
         // if (match) {
         //     const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 86400 });
