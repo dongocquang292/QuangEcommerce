@@ -2,6 +2,7 @@ const db = require("../models/index");
 const User = db.user;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -11,28 +12,52 @@ const registerUser = async (req, res) => {
         const findUser = await User.findOne({ where: { email: email } });
         if (!findUser) {
             const user = {
-                id: req.body.id,
                 username: req.body.username,
                 email: req.body.email,
                 password: req.body.password,
                 address: req.body.address,
                 phonenumber: req.body.phonenumber,
             }
+            user.password = await bcrypt.genSalt(10);
             const createUser = await User.create(user);
-            res.send(createUser);
+            res.status(200).send(createUser);
+            const tokenEmail = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 86400 });
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'hoahongden7749@gmail.com',
+                    pass: 'maildetest'
+                }
+            });
 
+            const mailOptions = {
+                from: 'hoahongden7749@gmail.com',
+                to: 'quangdn@vmodev.com',
+                subject: 'Mail thong bao',
+                text: `${tokenEmail}`
+            };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    res.status(400).send("Can't send mail!")
+                } else {
+                    res.status(200).send('Email sent: ' + info.response);
+                }
+            });
         } else {
-            res.send("user da ton tai")
+            res.send("User already exist!")
         }
     } catch (error) {
         res.status(400).send(error)
     }
 };
 
+
+
 const getUser = async (req, res) => {
     try {
         const user = await User.findAll();
-        res.send(user)
+        res.status(200).send(user)
     } catch (error) {
         res.status(400).send(error)
     }
@@ -43,9 +68,9 @@ const getUserId = async (req, res) => {
     try {
         const id = req.params.id;
         const user = await User.findOne({ where: { id: id } });
-        res.send(user)
+        res.status(200).send(user)
     } catch (error) {
-        res.send(error);
+        res.status(400).send(error)
     }
 };
 
@@ -59,11 +84,11 @@ const updateUser = async (req, res) => {
             address: req.body.address,
             phonenumber: req.body.phonenumber,
         }
-        const update = await User.update(user, { where: { id: id } });
-        res.send("update thanh cong");
+        await User.update(user, { where: { id: id } });
+        res.status(200).send("Update user success");
 
     } catch (error) {
-        res.send(error);
+        res.status(400).send(error)
     }
 }
 
@@ -71,10 +96,10 @@ const deleteUser = async (req, res) => {
     try {
         const id = req.params.id;
         await User.destroy({ where: { id: id } });
-        res.send("Da xoa")
+        res.status(200).send("Deleted!")
 
     } catch (error) {
-        res.send(error)
+        res.status(400).send(error)
     }
 }
 
@@ -83,32 +108,46 @@ const loginUser = async (req, res) => {
     try {
         const email = req.body.email;
         const password = req.body.password;
+        if (!email || !password) {
+            res.status(400).send({ error: 'You need a email and password' });
+            return;
+        }
         const user = await User.findOne({ where: { email: email } });
         if (!user) {
-            return res.status(404).send({ message: "User khong ton tai" });
+            return res.status(404).send({ message: "User not exist!" });
+        } else {
+            const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 86400 });
+            const validPassword = bcrypt.compare(req.body.password, user.password);
+            if (validPassword) {
+                res.status(200).send({
+                    accessToken: token
+                });
+            } else {
+                res.status(400).json({ error: "Invalid Password" });
+            }
         }
-        // const match =  bcrypt.compareSync(req.body.password, user.password);
-        // console.log(match)
-        // if (match) {
-        //     const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 86400 });
-        //     res.status(200).send({
-        //         accessToken: token
-        //     });
-        // } else {
-        //     res.status(401).send({
-        //         accessToken: null,
-        //         message: "Invalid Password!"
-        //     });
-        // }
-        const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 86400 });
-        res.status(200).send({
-            accessToken: token
-        });
+
     } catch (error) {
-        res.send(error)
+        res.status(400).send(error)
     }
 
 }
+const verifyTokenEmail = async (req, res) => {
+    try {
+        const token = req.params.token;
+        const emailToken = req.body.token;
+        if (!token) return res.send("Don't have token!")
+        // const userToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+        if (emailToken == token) {
+            return res.status(200).send("Token verified")
+        } else {
+            res.send("Token wrong!")
+        }
+        return next();
+    } catch (error) {
+        res.status(400).send(error)
+    }
+}
 module.exports = {
-    registerUser, updateUser, deleteUser, getUserId, getUser, loginUser
+    registerUser, updateUser, deleteUser, getUserId, getUser, loginUser, verifyTokenEmail
 }

@@ -1,22 +1,19 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { user } = require('../models');
 require('dotenv').config()
 
 const verifyToken = async (req, res, next) => {
     try {
         const token = req.headers["token"];
-        if (!token) return res.send("ko co token")
+        if (!token) return res.send("Don't have token")
 
         const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         req.user = user;
         return next();
     } catch (error) {
-        res.send("Loi xac thuc")
+        res.send("Error verify")
     }
 }
 
-// const endcodedToke = async(email) => {
-//     return jwt.sign({
 
-//     });
-// }
 module.exports = { verifyToken: verifyToken }

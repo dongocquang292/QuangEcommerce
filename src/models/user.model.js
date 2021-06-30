@@ -1,10 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const User = sequelize.define("user", {
-        id: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            primaryKey: true
-        },
+
         username: {
             type: Sequelize.STRING
         },
@@ -21,6 +17,8 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         }
     });
-
+    // User.associate = function (models) {
+    //     User.hasMany(models.Order);
+    // };
     return User;
 };

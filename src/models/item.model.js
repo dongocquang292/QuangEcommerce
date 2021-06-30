@@ -1,10 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
     const Item = sequelize.define("item", {
-        id: {
-            type: Sequelize.INTEGER,
-            allowNull: false,
-            primaryKey: true
-        },
         itemname: {
             type: Sequelize.STRING
         },
@@ -12,13 +7,13 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         importPrice: {
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         },
         price: {
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         },
         weight: {
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         },
         thumbnail: {
             type: Sequelize.STRING
