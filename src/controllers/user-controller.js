@@ -6,6 +6,11 @@ const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const getPagination = (page, size) => {
+    const limit = size ? +size : 3;
+    const offset = page ? page * limit : 0;
+    return { limit, offset };
+};
 const registerUser = async (req, res) => {
     try {
         const email = req.body.email;
@@ -56,8 +61,10 @@ const registerUser = async (req, res) => {
 
 const getUser = async (req, res) => {
     try {
-        const user = await User.findAll();
-        res.status(200).send(user)
+        const { page, size } = req.query;
+        const { limit, offset } = getPagination(page, size);
+        const data = await User.findAll({ where: limit, offset });
+        res.status(200).send(data)
     } catch (error) {
         res.status(400).send(error)
     }

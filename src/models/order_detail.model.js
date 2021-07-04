@@ -1,10 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const OrderDetail = sequelize.define("orderDetail", {
-        // userId: {
-        //     type: Sequelize.INTEGER,
-        //     allowNull: true,
-        //     field: 'userId',
-        // },
+
         // orderId: {
         //     type: Sequelize.INTEGER,
         //     allowNull: false,
@@ -15,7 +11,7 @@ module.exports = (sequelize, Sequelize) => {
         //     allowNull: true,
         //     field: 'itemId',
         // },
-        pricePay: {
+        price: {
             type: Sequelize.INTEGER
         },
         quantity: {
@@ -26,12 +22,9 @@ module.exports = (sequelize, Sequelize) => {
 
     });
     // OrderDetail.associate = function (models) {
-    //     OrderDetail.belongsTo(models.Order);
-    //     OrderDetail.belongsTo(models.Item);
+    //     OrderDetail.belongsTo(models.Order, { foreignKey: 'orderId' });
+    //     OrderDetail.belongsTo(models.Item, { foreignKey: 'itemId' });
     // };
-    // OrderDetail.beforeBulkUpdate(orderDetail => {
-    //     OrderDetail.attributes.updateTime = new Date();
-    //     return OrderDetail;
-    // });
+
     return OrderDetail;
 };

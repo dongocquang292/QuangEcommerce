@@ -20,7 +20,7 @@ app.use('/user', userRoute)
 app.use('/category', categoryRoute);
 app.use('/item', itemRoute);
 app.use('/order', orderRoute);
-// app.use('/orderDetail', orderDetailRoute);
+app.use('/orderDetail', orderDetailRoute);
 app.use('/flashSale', flashSaleRoute);
 
 const PORT = process.env.PORT || 8080;

@@ -6,5 +6,5 @@ router.get("/getFlashSale", flashSaleController.getFlashSale);
 router.get("/getFlashSale/:id", flashSaleController.getFlashSaleId);
 router.put("/updateFlashSale/:id", flashSaleController.updateFlashSale);
 router.delete("/deleteFlashSale/:id", flashSaleController.deleteFlashSale);
-router.post("/priceDiscount/:id", flashSaleController.priceDiscount);
+// router.post("/priceDiscount", flashSaleController.priceDiscount);
 module.exports = router;

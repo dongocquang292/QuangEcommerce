@@ -1,5 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
     const Order = sequelize.define("order", {
+        trackingNumber: {
+            type: Sequelize.INTEGER,
+            unique: true,
+            field: 'tracking_number'
+        },
         // userId: {
         //     type: Sequelize.INTEGER,
         //     allowNull: true,
@@ -16,10 +21,5 @@ module.exports = (sequelize, Sequelize) => {
     //     Order.hasMany(models.OrderDetail);
     //     Order.belongsTo(models.User, { foreignKey: 'userId' });
     // };
-
-    // Order.beforeBulkUpdate(order => {
-    //     order.attributes.updateTime = new Date();
-    //     return order;
-    // });
     return Order;
 };

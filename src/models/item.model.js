@@ -26,9 +26,16 @@ module.exports = (sequelize, Sequelize) => {
         },
         numberWare: {
             type: Sequelize.INTEGER
-        }
+        },
+        priceDiscount: {
+            type: Sequelize.INTEGER,
+            allowNull: true
+        },
 
     });
-
+    // Item.associate = (models) => {
+    //     Item.hasMany(models.OrderDetail);
+    //     Item.belongsTo(models.Category, { foreignKey: 'categoryId' });
+    // };
     return Item;
 };

@@ -8,8 +8,8 @@ const createCategory = async (req, res) => {
         const findCategory = await Category.findOne({ where: { categoryName: categoryName } });
         if (!findCategory) {
             const category = {
-                id: req.body.id,
                 categoryName: req.body.categoryName,
+                location: req.body.location,
                 status: req.body.status
             }
             const createCate = await Category.create(category);
@@ -48,9 +48,10 @@ const updateCategory = async (req, res) => {
         const id = req.params.id;
         const category = {
             categoryName: req.body.categoryName,
+            location: req.body.location,
             status: req.body.status
         }
-        const update = await Category.update(category, { where: { id: id } });
+        await Category.update(category, { where: { id: id } });
         res.status(200).send("Update success");
 
     } catch (error) {
@@ -69,6 +70,16 @@ const deleteCategory = async (req, res) => {
     }
 }
 
+const sortBanner = async (req, res) => {
+    try {
+        const data = await Category.findAll();
+        const byLocation = (a, b) => a.location - b.location;
+        data.sort(byLocation);
+        res.send(data)
+    } catch (error) {
+        res.send(error)
+    }
+}
 module.exports = {
-    createCategory, getCategory, getCategoryId, updateCategory, deleteCategory
+    createCategory, getCategory, getCategoryId, updateCategory, deleteCategory, sortBanner
 }

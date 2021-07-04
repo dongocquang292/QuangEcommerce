@@ -1,7 +1,6 @@
 const db = require("../models/index");
 const Item = db.item;
 
-
 const createItem = async (req, res) => {
     try {
         const itemName = req.body.itemname;
