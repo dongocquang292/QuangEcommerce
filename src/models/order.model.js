@@ -1,25 +1,23 @@
 module.exports = (sequelize, Sequelize) => {
     const Order = sequelize.define("order", {
-        trackingNumber: {
+
+        userId: {
             type: Sequelize.INTEGER,
-            unique: true,
-            field: 'tracking_number'
+            allowNull: true
+
         },
-        // userId: {
-        //     type: Sequelize.INTEGER,
-        //     allowNull: true,
-        //     field: 'userId',
-        // },
-        // orderDetailId: {
-        //     type: Sequelize.INTEGER,
-        //     allowNull: true,
-        //     field: 'orderDetailId',
-        // }
+        itemId: {
+            type: Sequelize.INTEGER,
+            allowNull: true
+
+        },
+        orderDetailId: {
+            type: Sequelize.INTEGER,
+            allowNull: true
+
+        },
+
 
     });
-    // Order.associate = (models) => {
-    //     Order.hasMany(models.OrderDetail);
-    //     Order.belongsTo(models.User, { foreignKey: 'userId' });
-    // };
     return Order;
 };

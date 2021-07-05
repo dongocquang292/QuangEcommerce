@@ -15,23 +15,25 @@ const createFlashSale = async (req, res) => {
                 stopTime: req.body.stopTime,
                 discount: req.body.discount,
             }
-            const createFS = await FlashSale.create(fls);
-            res.send(createFS)
 
+            let createFS = await FlashSale.create(fls);
+            res.status(200).send(createFS)
+
+            // nhập id các items được flashSale
             const idItems = req.body.idItems;
-            if (Date.parse(createFS.startTime) > Date.parse(createFS.stopTime)) {
+            const timeNow = new Date();
+            const getTimeNow = timeNow.getFullYear() + '-' + (timeNow.getMonth() + 1) + '-' + timeNow.getDate() + ' ' + timeNow.getHours() + ":" + timeNow.getMinutes() + ":" + timeNow.getSeconds();
+            if (fls.startTime <= getTimeNow && fls.stopTime >= getTimeNow) {
+                idItems.forEach(async (element) => {
 
+                    const id = element;
+                    const getItems = await Item.findOne({ where: { id: id } })
+                    const prePrice = getItems.price;
+                    const priceDiscount = prePrice - ((prePrice * createFS.discount) / 100);
+
+                    await Item.update({ priceDiscount: priceDiscount }, { where: { id: id } })
+                });
             }
-
-            const setPrice = idItems.forEach(async (element) => {
-                const id = element;
-                const getItems = await Item.findOne({ where: { id: id } })
-                const prePrice = getItems.price
-                const priceDiscount = prePrice - ((prePrice * createFS.discount) / 100);
-                await Item.update({ priceDiscount: priceDiscount }, { where: { id: id } })
-            });
-
-
         } else {
             res.send("flash sale already exist")
         }
@@ -43,8 +45,26 @@ const createFlashSale = async (req, res) => {
 
 const getFlashSale = async (req, res) => {
     try {
-        const flasSale = await FlashSale.findAll();
-        res.status(200).send(flasSale)
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber = Number.parseInt(req.query.size);
+
+        let page = 0;
+        if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
+            page = pageAsNumber;
+        }
+        let size = 2;
+
+        if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
+            size = sizeAsNumber;
+        }
+        const flashSale = await FlashSale.findAndCountAll({
+            limit: size,
+            offset: page * size
+        });
+        res.status(200).send({
+            content: flashSale.rows,
+            totalPages: Math.ceil(flashSale.count / size)
+        })
     } catch (error) {
         res.status(400).send(error)
     }

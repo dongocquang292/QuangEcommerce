@@ -18,4 +18,13 @@ db.item = require('./item.model')(sequelize, Sequelize);
 db.order = require('./order.model')(sequelize, Sequelize);
 db.orderDetail = require('./order_detail.model')(sequelize, Sequelize);
 db.flashSale = require('./flashSale.model')(sequelize, Sequelize);
+db.voucher = require('./voucher.model')(sequelize, Sequelize);
+
+db.order.hasMany(db.orderDetail);
+db.orderDetail.belongsTo(db.order);
+
+db.order.hasMany(db.item);
+db.item.belongsTo(db.order);
+
+
 module.exports = db;

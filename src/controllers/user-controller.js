@@ -5,12 +5,8 @@ var bcrypt = require("bcryptjs");
 const nodemailer = require('nodemailer');
 const dotenv = require('dotenv');
 dotenv.config();
+const { Op } = require("sequelize");
 
-const getPagination = (page, size) => {
-    const limit = size ? +size : 3;
-    const offset = page ? page * limit : 0;
-    return { limit, offset };
-};
 const registerUser = async (req, res) => {
     try {
         const email = req.body.email;
@@ -61,10 +57,26 @@ const registerUser = async (req, res) => {
 
 const getUser = async (req, res) => {
     try {
-        const { page, size } = req.query;
-        const { limit, offset } = getPagination(page, size);
-        const data = await User.findAll({ where: limit, offset });
-        res.status(200).send(data)
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber = Number.parseInt(req.query.size);
+
+        let page = 0;
+        if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
+            page = pageAsNumber;
+        }
+        let size = 2;
+
+        if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
+            size = sizeAsNumber;
+        }
+        const user = await User.findAndCountAll({
+            limit: size,
+            offset: page * size
+        });
+        res.status(200).send({
+            content: user.rows,
+            totalPages: Math.ceil(user.count / size)
+        })
     } catch (error) {
         res.status(400).send(error)
     }
@@ -80,6 +92,33 @@ const getUserId = async (req, res) => {
         res.status(400).send(error)
     }
 };
+
+const sortUser = async (req, res) => {
+    try {
+        const user = await User.findAll();
+        const arrUserName = [];
+        user.forEach(user => {
+            arrUserName.push(user.username);
+
+        });
+
+        const afteSort = arrUserName.sort();
+        res.status(200).json(afteSort)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+}
+
+const findUserName = async (req, res) => {
+    try {
+        const search = req.body.search;
+        const userBySearch = await User.findAll({ where: { username: { [Op.like]: `%${search}%` } } })
+        res.status(200).send(userBySearch);
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
+
 
 const updateUser = async (req, res) => {
     try {
@@ -156,5 +195,5 @@ const verifyTokenEmail = async (req, res) => {
     }
 }
 module.exports = {
-    registerUser, updateUser, deleteUser, getUserId, getUser, loginUser, verifyTokenEmail
+    registerUser, updateUser, deleteUser, getUserId, getUser, loginUser, verifyTokenEmail, sortUser, findUserName
 }

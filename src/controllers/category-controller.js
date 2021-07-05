@@ -26,8 +26,26 @@ const createCategory = async (req, res) => {
 
 const getCategory = async (req, res) => {
     try {
-        const category = await Category.findAll();
-        res.status(200).send(category)
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber = Number.parseInt(req.query.size);
+
+        let page = 0;
+        if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
+            page = pageAsNumber;
+        }
+        let size = 2;
+
+        if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
+            size = sizeAsNumber;
+        }
+        const category = await Category.findAndCountAll({
+            limit: size,
+            offset: page * size
+        });
+        res.status(200).send({
+            content: category.rows,
+            totalPages: Math.ceil(category.count / size)
+        })
     } catch (error) {
         res.status(400).send(error)
     }
@@ -80,6 +98,30 @@ const sortBanner = async (req, res) => {
         res.send(error)
     }
 }
+
+const getCategoryActive = async (req, res) => {
+    try {
+        const response = await Category.findAll({ where: { status: 1 } })
+
+        res.status(200).json({
+            status: "success",
+            error_msg: "",
+            data: {
+                message: 'Category active',
+                response
+            }
+        });
+    } catch (error) {
+        console.log(err);
+        res.status(500).json({
+            status: "error",
+            error: err,
+            data: {
+                message: "Error"
+            }
+        });
+    }
+}
 module.exports = {
-    createCategory, getCategory, getCategoryId, updateCategory, deleteCategory, sortBanner
+    createCategory, getCategory, getCategoryId, updateCategory, deleteCategory, sortBanner, getCategoryActive
 }

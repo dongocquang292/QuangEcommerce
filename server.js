@@ -6,6 +6,7 @@ const itemRoute = require("./src/routes/item.route");
 const orderRoute = require("./src/routes/order.route");
 const orderDetailRoute = require('./src/routes/order_detail.route');
 const flashSaleRoute = require('./src/routes/flashSale.route');
+const voucherRoute = require('./src/routes/voucher.route');
 app.use(express.json());
 
 

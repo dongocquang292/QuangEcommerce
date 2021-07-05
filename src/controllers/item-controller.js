@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const Item = db.item;
 
+
 const createItem = async (req, res) => {
     try {
         const itemName = req.body.itemname;
@@ -32,13 +33,39 @@ const createItem = async (req, res) => {
 
 const getItem = async (req, res) => {
     try {
-        const item = await Item.findAll();
-        res.status(200).send(item)
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber = Number.parseInt(req.query.size);
+
+        let page = 0;
+        if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
+            page = pageAsNumber;
+        }
+        let size = 2;
+
+        if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
+            size = sizeAsNumber;
+        }
+
+        const item = await Item.findAndCountAll({
+            limit: size,
+            offset: page * size
+        });
+        res.status(200).send({
+            content: item.rows,
+            totalPages: Math.ceil(item.count / size)
+        })
     } catch (error) {
         res.status(400).send(error)
     }
 }
-
+const sortItemAlphabe = async (req, res) => {
+    try {
+        const item = await Item.findAll()
+        res.send(item)
+    } catch (error) {
+        res.status(400).send(error)
+    }
+}
 const getItemId = async (req, res) => {
     try {
         const id = req.params.id;
@@ -83,5 +110,5 @@ const deleteItem = async (req, res) => {
 }
 
 module.exports = {
-    createItem, getItem, getItemId, updateItem, deleteItem
+    createItem, getItem, getItemId, updateItem, deleteItem, sortItemAlphabe
 }
