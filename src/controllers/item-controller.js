@@ -1,29 +1,31 @@
 const db = require("../models/index");
 const Item = db.item;
-
-
+const OrderDetail = db.orderDetail;
+const Img = db.image;
 const createItem = async (req, res) => {
     try {
-        const itemName = req.body.itemname;
-        const findItem = await Item.findOne({ where: { itemname: itemName } });
-
+        const itemName = req.body.itemName;
+        const findItem = await Item.findOne({ where: { itemName: itemName } });
         if (!findItem) {
             const item = {
-                itemname: req.body.itemname,
+                itemName: req.body.itemName,
                 barcode: req.body.barcode,
                 importPrice: req.body.importPrice,
                 price: req.body.price,
                 weight: req.body.weight,
-                thumbnail: req.body.thumbnail,
-                image: req.file.path,
+                thumbnail: req.file.path,
+                image: req.body.image,
                 description: req.body.description,
                 numberWare: req.body.numberWare,
+                orderDetailId: req.body.orderDetailId,
+                categoryId: req.body.categoryId,
+                flashSaleId: req.body.flashSaleId
             }
             const createItem = await Item.create(item);
             res.status(200).send(createItem)
         }
         else {
-            res.status(400).send("Ttem already exist!")
+            res.status(400).send("Item already exist!")
         }
     } catch (error) {
         return res.status(400).send(error)
@@ -80,13 +82,13 @@ const updateItem = async (req, res) => {
     try {
         const id = req.params.id;
         const item = {
-            itemname: req.body.itemname,
+            itemName: req.body.itemName,
             barcode: req.body.barcode,
             importPrice: req.body.importPrice,
             price: req.body.price,
             weight: req.body.weight,
-            thumbnail: req.body.thumbnail,
-            image: req.file.path,
+            thumbnail: req.file.path,
+            image: req.body.image,
             description: req.body.description,
             numberWare: req.body.numberWare,
         }
@@ -109,6 +111,27 @@ const deleteItem = async (req, res) => {
     }
 }
 
+const getImgOfItem = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const getItem = await Item.findOne({ where: { id: id } });
+        const getIdImg = getItem.image;
+        const arrId = Array.from(getIdImg.split(','), Number);
+        let i = 0;
+        let len = arrId.length;
+        let linkImg = "";
+        for (; i < len; i++) {
+            const id = arrId[i];
+            const Image = await Img.findOne({ where: { id: id } });
+            const img = Image.img;
+            linkImg += img + ', ';
+        }
+        res.status(200).send("Link Image: " + linkImg)
+    } catch (error) {
+        res.status(400).send(error);
+    }
+}
+
 module.exports = {
-    createItem, getItem, getItemId, updateItem, deleteItem, sortItemAlphabe
+    createItem, getItem, getItemId, updateItem, deleteItem, sortItemAlphabe, getImgOfItem
 }

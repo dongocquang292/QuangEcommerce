@@ -15,15 +15,11 @@ const schemaUser = Joi.object().keys({
         .required()
         .error(err => { err[0].message = "Error email"; return err; }),
     address: Joi.string()
-        .alphanum()
         .min(3)
         .max(50)
         .required()
         .error(err => { err[0].message = "Error address"; return err; }),
-    phonenumber: Joi.string()
-        .alphanum()
-        .min(10)
-        .max(11)
+    phonenumber: Joi.number()
         .required()
         .error(err => { err[0].message = "Error phonenumber"; return err; }),
 });

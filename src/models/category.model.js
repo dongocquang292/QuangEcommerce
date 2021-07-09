@@ -9,12 +9,9 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         status: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            defaultValue: 1,
         }
     });
-    // Category.associate = (models) => {
-    //     Category.hasMany(models.Item);
-
-    // };
     return Category;
 };

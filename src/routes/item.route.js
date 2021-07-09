@@ -1,15 +1,18 @@
 
 const itemController = require("../controllers/item-controller");
 const uploadMiddleware = require('../middleware/upload');
-const validateItem = require('../middleware/validate')
+const validateItem = require('../middleware/validate');
+const CheckRole = require('../middleware/checkRole');
+const auth = require('../middleware/authJwt');
 const router = require("express").Router();
 
 
-router.post("/createItem", uploadMiddleware.uploadImg, itemController.createItem);
-router.get("/getItem", itemController.getItem);
-router.get("/sortItemAlphabe", itemController.sortItemAlphabe);
-router.get("/getItem/:id", itemController.getItemId);
-router.put("/updateItem/:id", uploadMiddleware.uploadImg, itemController.updateItem);
-router.delete("/deleteItem/:id", itemController.deleteItem);
+router.post("/createItem", auth.verifyToken, CheckRole.checkRole, uploadMiddleware.uploadThumbnail, itemController.createItem);
+router.get("/getItem", auth.verifyToken, CheckRole.checkRole, itemController.getItem);
+router.get("/sortItemAlphabe", auth.verifyToken, CheckRole.checkRole, itemController.sortItemAlphabe);
+router.get("/getItem/:id", auth.verifyToken, CheckRole.checkRole, itemController.getItemId);
+router.get("/getImg/:id", auth.verifyToken, CheckRole.checkRole, itemController.getImgOfItem);
+router.put("/updateItem/:id", auth.verifyToken, CheckRole.checkRole, uploadMiddleware.uploadThumbnail, itemController.updateItem);
+router.delete("/deleteItem/:id", auth.verifyToken, CheckRole.checkRole, itemController.deleteItem);
 
 module.exports = router;

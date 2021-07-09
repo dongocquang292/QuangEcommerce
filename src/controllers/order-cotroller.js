@@ -3,19 +3,24 @@ const Order = db.order;
 const OrderDetail = db.orderDetail;
 const Item = db.item;
 const User = db.user;
+const Voucher = db.voucher;
+
+
 const createOrder = async (req, res) => {
     try {
         const order = {
             userId: req.body.userId,
-            itemId: req.body.itemId,
             orderDetailId: req.body.orderDetailId,
+            codeVoucher: req.body.codeVoucher,
         }
-        const getPrice = await Item.findOne({ include: [{ model: Item, attributes: ['price'] }] }, { where: { id: order.itemId } });
-        const getQuantity = await OrderDetail.findOne({ include: [{ model: OrderDetail, attributes: ['quantity'] }] }, { where: { id: order.orderDetailId } });
-        const getInfoUser = await User.findOne({ include: [{ model: User, attributes: ['username', 'email', 'address', 'phonenumber'] }] }, { where: { id: order.userId } })
-        const createOD = await Order.create(order);
-        res.status(200).send(createOD)
-
+        // tru di so luong voucher
+        const findVoucher = await Voucher.findOne({ attributes: ['quantity'] }, { where: { code: order.codeVoucher } });
+        if (findVoucher) {
+            const quantityAfterUse = findVoucher.quantity - 1;
+            await Voucher.update({ quantity: quantityAfterUse }, { where: { code: order.codeVoucher } })
+        }
+        const createOrder = await Order.create(order);
+        res.status(200).send(createOrder)
     } catch (error) {
         return res.status(400).send(error)
     }
@@ -37,6 +42,7 @@ const getOrder = async (req, res) => {
         }
 
         const order = await Order.findAndCountAll({
+            include: [{ model: OrderDetail, attributes: ['price'] }],
             limit: size,
             offset: page * size
         });
@@ -52,7 +58,7 @@ const getOrder = async (req, res) => {
 const getOrderId = async (req, res) => {
     try {
         const id = req.params.id;
-        const order = await Order.findOne({ include: [{ model: OrderDetail, attributes: ['price'] }] }, { where: { id: id } });
+        const order = await Order.findOne({ include: [{ model: Item, attributes: ['price'] }] }, { where: { id: id } });
 
         res.status(200).send(order)
     } catch (error) {
@@ -61,20 +67,20 @@ const getOrderId = async (req, res) => {
 };
 
 
-const updateOrder = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const order = {
-            trackingNumber: req.body.trackingNumber,
-            priceLast: req.body.priceLast,
-        }
-        await Order.update(order, { where: { id: id } });
-        res.status(200).send("Update success");
+// const updateOrder = async (req, res) => {
+//     try {
+//         const id = req.params.id;
+//         const order = {
+//             trackingNumber: req.body.trackingNumber,
+//             priceLast: req.body.priceLast,
+//         }
+//         await Order.update(order, { where: { id: id } });
+//         res.status(200).send("Update success");
 
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
+//     } catch (error) {
+//         res.status(400).send(error)
+//     }
+// }
 
 const deleteOrder = async (req, res) => {
     try {
@@ -87,6 +93,7 @@ const deleteOrder = async (req, res) => {
     }
 }
 
+
 module.exports = {
-    createOrder, getOrder, getOrderId, updateOrder, deleteOrder
+    createOrder, getOrder, getOrderId, deleteOrder
 }

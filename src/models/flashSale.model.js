@@ -1,12 +1,14 @@
-const { allow } = require("joi");
+// const { allow } = require("joi");
 
 module.exports = (sequelize, Sequelize) => {
     const FlashSale = sequelize.define("flashSale", {
         flashSaleName: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+            allowNull: false
         },
         amount: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull: false
         },
         startTime: {
             type: Sequelize.DATE,
@@ -17,7 +19,8 @@ module.exports = (sequelize, Sequelize) => {
             allowNull: false
         },
         discount: {
-            type: Sequelize.INTEGER
+            type: Sequelize.INTEGER,
+            allowNull: false
         }
     });
 

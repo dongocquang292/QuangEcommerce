@@ -1,8 +1,10 @@
 const db = require("../models/index");
-const { get } = require("../routes/item.route");
-const { createItem } = require("./item-controller");
 const FlashSale = db.flashSale;
 const Item = db.item;
+const User = db.user;
+const cron = require('node-cron');
+const nodemailer = require('nodemailer');
+
 const createFlashSale = async (req, res) => {
     try {
         const flashSaleName = req.body.flashSaleName;
@@ -16,28 +18,29 @@ const createFlashSale = async (req, res) => {
                 discount: req.body.discount,
             }
 
-            let createFS = await FlashSale.create(fls);
-            res.status(200).send(createFS)
+            const createFS = await FlashSale.create(fls);
+
 
             // nhập id các items được flashSale
             const idItems = req.body.idItems;
-            const timeNow = new Date();
-            const getTimeNow = timeNow.getFullYear() + '-' + (timeNow.getMonth() + 1) + '-' + timeNow.getDate() + ' ' + timeNow.getHours() + ":" + timeNow.getMinutes() + ":" + timeNow.getSeconds();
-            if (fls.startTime <= getTimeNow && fls.stopTime >= getTimeNow) {
+            //const getTimeNow = timeNow.getFullYear() + '-' + (timeNow.getMonth() + 1) + '-' + timeNow.getDate() + ' ' + timeNow.getHours() + ":" + timeNow.getMinutes() + ":" + timeNow.getSeconds();
+            if (Date.parse(fls.startTime) <= Date.now() && Date.parse(fls.stopTime) >= Date.now()) {
                 idItems.forEach(async (element) => {
-
                     const id = element;
-                    const getItems = await Item.findOne({ where: { id: id } })
-                    const prePrice = getItems.price;
-                    const priceDiscount = prePrice - ((prePrice * createFS.discount) / 100);
-
-                    await Item.update({ priceDiscount: priceDiscount }, { where: { id: id } })
-                });
+                    const getItems = await Item.findOne({ attributes: ['price'] }, { where: { id: id } });
+                    const priceDiscount = getItems.price - ((getItems.price * createFS.discount) / 100);
+                    await Item.update({ price: priceDiscount }, { where: { id: id } })
+                })
+            } else {
+                res.send('Khong trong tgian')
             }
+            res.status(200).send(createFS)
         } else {
             res.send("flash sale already exist")
         }
+
     } catch (error) {
+
         return res.status(400).send(error)
     }
 
@@ -109,6 +112,40 @@ const deleteFlashSale = async (req, res) => {
     }
 }
 
+const notification = async (req, res) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'hoahongden7749@gmail.com',
+                pass: 'maildetest'
+            }
+        });
+        const getAllEmail = await User.findAll({ attributes: ['email'] });
+        cron.schedule('1 * * * * * ', function () {
+            getAllEmail.map(item => {
+                const mailOptions = {
+                    from: 'hoahongden7749@gmail.com',
+                    to: "quangdn@vmodev.com",
+                    subject: 'Mail thong bao',
+                    text: `15p nua co flash sale`
+                };
+                console.log(mailOptions);
+                transporter.sendMail(mailOptions, function (error, info) {
+
+                    if (error) {
+                        res.status(400).send("Can't send mail!")
+                    } else {
+                        res.status(200).send('Email sent: ' + info.response);
+                    }
+                });
+            });
+
+        });
+    } catch (error) {
+
+    }
+}
 module.exports = {
-    createFlashSale, getFlashSale, getFlashSaleId, updateFlashSale, deleteFlashSale,
+    createFlashSale, getFlashSale, getFlashSaleId, updateFlashSale, deleteFlashSale, notification
 }

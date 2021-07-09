@@ -1,5 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
     const Voucher = sequelize.define("voucher", {
+        code: {
+            type: Sequelize.STRING
+        },
         quantity: {
             type: Sequelize.INTEGER
         },

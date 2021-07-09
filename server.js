@@ -7,6 +7,7 @@ const orderRoute = require("./src/routes/order.route");
 const orderDetailRoute = require('./src/routes/order_detail.route');
 const flashSaleRoute = require('./src/routes/flashSale.route');
 const voucherRoute = require('./src/routes/voucher.route');
+const imageRoute = require('./src/routes/image.route')
 app.use(express.json());
 
 
@@ -23,7 +24,8 @@ app.use('/item', itemRoute);
 app.use('/order', orderRoute);
 app.use('/orderDetail', orderDetailRoute);
 app.use('/flashSale', flashSaleRoute);
-
+app.use('/voucher', voucherRoute);
+app.use('/image', imageRoute);
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);

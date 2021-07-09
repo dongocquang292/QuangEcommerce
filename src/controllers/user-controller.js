@@ -162,7 +162,7 @@ const loginUser = async (req, res) => {
         if (!user) {
             return res.status(404).send({ message: "User not exist!" });
         } else {
-            const token = jwt.sign({ id: user.id }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 86400 });
+            const token = jwt.sign({ id: user.id, role: user.role }, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 86400 });
             const validPassword = bcrypt.compare(req.body.password, user.password);
             if (validPassword) {
                 res.status(200).send({
