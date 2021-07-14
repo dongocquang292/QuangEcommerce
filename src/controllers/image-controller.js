@@ -4,10 +4,13 @@ const Image = db.image;
 
 const createImage = async (req, res) => {
     try {
-        const img = req.file.path;
-        const findImg = await Image.findOne({ where: { img: img } });
+        const createImg = {
+            img: req.file.path,
+            itemId: req.body.itemId
+        }
+        const findImg = await Image.findOne({ where: { img: createImg.img } });
         if (!findImg) {
-            const createImage = await Image.create({ img: img })
+            const createImage = await Image.create(createImg)
             return res.status(200).send(createImage);
         } else {
             res.send("already exist")
@@ -57,9 +60,12 @@ const getImageId = async (req, res) => {
 
 const updateImage = async (req, res) => {
     try {
-        const img = req.body.img;
+        const updateImg = {
+            img: req.body.img,
+            itemId: req.body.itemId
+        }
         const id = req.params.id;
-        await Image.update(img, { where: { id: id } });
+        await Image.update(updateImg, { where: { id: id } });
         res.status(200).send("Update success");
     } catch (error) {
         res.status(400).send(error);

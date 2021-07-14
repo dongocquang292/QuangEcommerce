@@ -21,7 +21,7 @@ db.flashSale = require('./flashSale.model')(sequelize, Sequelize);
 db.voucher = require('./voucher.model')(sequelize, Sequelize);
 db.image = require('./image.model')(sequelize, Sequelize);
 
-db.item.hasMany(db.image, { foreignKey: 'imageId' });
+db.item.hasMany(db.image, { foreignKey: 'itemId' });
 db.image.belongsTo(db.item);
 
 db.order.hasMany(db.orderDetail, { foreignKey: 'orderId' });

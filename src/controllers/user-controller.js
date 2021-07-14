@@ -34,7 +34,7 @@ const registerUser = async (req, res) => {
             const mailOptions = {
                 from: 'hoahongden7749@gmail.com',
                 to: 'quangdn@vmodev.com',
-                subject: 'Mail thong bao',
+                subject: 'Verify ',
                 text: `${tokenEmail}`
             };
 
@@ -46,7 +46,7 @@ const registerUser = async (req, res) => {
                 }
             });
         } else {
-            res.send("User already exist!")
+            res.status(409).send("User already exist!")
         }
     } catch (error) {
         res.status(400).send(error)
@@ -64,14 +64,18 @@ const getUser = async (req, res) => {
         if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
             page = pageAsNumber;
         }
-        let size = 2;
+        let size = 3;
 
         if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
             size = sizeAsNumber;
         }
+        const search = req.body.search;
         const user = await User.findAndCountAll({
             limit: size,
-            offset: page * size
+            offset: page * size,
+            where: { username: { [Op.like]: `%${search}%` } }, order: [
+                ['username', 'ASC'],
+            ]
         });
         res.status(200).send({
             content: user.rows,
@@ -92,33 +96,6 @@ const getUserId = async (req, res) => {
         res.status(400).send(error)
     }
 };
-
-const sortUser = async (req, res) => {
-    try {
-        const user = await User.findAll();
-        const arrUserName = [];
-        user.forEach(user => {
-            arrUserName.push(user.username);
-
-        });
-
-        const afteSort = arrUserName.sort();
-        res.status(200).json(afteSort)
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
-
-const findUserName = async (req, res) => {
-    try {
-        const search = req.body.search;
-        const userBySearch = await User.findAll({ where: { username: { [Op.like]: `%${search}%` } } })
-        res.status(200).send(userBySearch);
-    } catch (error) {
-        res.status(400).send(error);
-    }
-}
-
 
 const updateUser = async (req, res) => {
     try {
@@ -181,7 +158,7 @@ const loginUser = async (req, res) => {
 const verifyTokenEmail = async (req, res) => {
     try {
         const token = req.params.token;
-        const emailToken = req.body.token;
+        const emailToken = req.body.emailToken;
         if (!token) return res.send("Don't have token!")
         // const userToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
         if (emailToken == token) {
@@ -195,5 +172,5 @@ const verifyTokenEmail = async (req, res) => {
     }
 }
 module.exports = {
-    registerUser, updateUser, deleteUser, getUserId, getUser, loginUser, verifyTokenEmail, sortUser, findUserName
+    registerUser, updateUser, deleteUser, getUserId, getUser, loginUser, verifyTokenEmail,
 }

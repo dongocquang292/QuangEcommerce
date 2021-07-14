@@ -2,6 +2,9 @@ const db = require("../models/index");
 const Item = db.item;
 const OrderDetail = db.orderDetail;
 const Img = db.image;
+const Category = db.category;
+const { Op } = require("sequelize");
+
 const createItem = async (req, res) => {
     try {
         const itemName = req.body.itemName;
@@ -14,15 +17,20 @@ const createItem = async (req, res) => {
                 price: req.body.price,
                 weight: req.body.weight,
                 thumbnail: req.file.path,
-                image: req.body.image,
                 description: req.body.description,
                 numberWare: req.body.numberWare,
                 orderDetailId: req.body.orderDetailId,
                 categoryId: req.body.categoryId,
                 flashSaleId: req.body.flashSaleId
             }
-            const createItem = await Item.create(item);
-            res.status(200).send(createItem)
+            const findCategory = await Category.findOne({ where: { id: item.categoryId } });
+            const statusCategory = findCategory.status;
+            if (statusCategory == 1) {
+                const createItem = await Item.create(item);
+                res.status(200).send(createItem)
+            } else {
+                res.send("Category inactive")
+            }
         }
         else {
             res.status(400).send("Item already exist!")
@@ -47,10 +55,14 @@ const getItem = async (req, res) => {
         if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
             size = sizeAsNumber;
         }
-
+        const search = req.body.search;
         const item = await Item.findAndCountAll({
             limit: size,
-            offset: page * size
+            offset: page * size,
+            include: [{ model: Img, attributes: ['img'] }],
+            where: { itemName: { [Op.like]: `%${search}%` } }, order: [
+                ['itemName', 'ASC'],
+            ]
         });
         res.status(200).send({
             content: item.rows,
@@ -60,18 +72,12 @@ const getItem = async (req, res) => {
         res.status(400).send(error)
     }
 }
-const sortItemAlphabe = async (req, res) => {
-    try {
-        const item = await Item.findAll()
-        res.send(item)
-    } catch (error) {
-        res.status(400).send(error)
-    }
-}
+
+
 const getItemId = async (req, res) => {
     try {
         const id = req.params.id;
-        const item = await Item.findOne({ where: { id: id } });
+        const item = await Item.findOne({ include: [{ model: Img, attributes: ['img'] }] }, { where: { id: id } });
         res.status(200).send(item)
     } catch (error) {
         res.status(400).send(error)
@@ -88,7 +94,6 @@ const updateItem = async (req, res) => {
             price: req.body.price,
             weight: req.body.weight,
             thumbnail: req.file.path,
-            image: req.body.image,
             description: req.body.description,
             numberWare: req.body.numberWare,
         }
@@ -132,6 +137,7 @@ const getImgOfItem = async (req, res) => {
     }
 }
 
+
 module.exports = {
-    createItem, getItem, getItemId, updateItem, deleteItem, sortItemAlphabe, getImgOfItem
+    createItem, getItem, getItemId, updateItem, deleteItem, getImgOfItem,
 }

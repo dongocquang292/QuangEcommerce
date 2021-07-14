@@ -1,6 +1,6 @@
 const db = require("../models/index");
 const Voucher = db.voucher;
-
+const { Op } = require("sequelize");
 
 const createVoucher = async (req, res) => {
     try {
@@ -35,14 +35,18 @@ const getVoucher = async (req, res) => {
         if (!Number.isNaN(pageAsNumber) && pageAsNumber > 0) {
             page = pageAsNumber;
         }
-        let size = 2;
+        let size = 3;
 
         if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
             size = sizeAsNumber;
         }
+        const search = req.body.search;
         const voucher = await Voucher.findAndCountAll({
             limit: size,
-            offset: page * size
+            offset: page * size,
+            where: { code: { [Op.like]: `%${search}%` } }, order: [
+                ['code', 'ASC'],
+            ]
         });
         res.status(200).send({
             content: voucher.rows,
@@ -52,6 +56,7 @@ const getVoucher = async (req, res) => {
         res.status(400).send(error)
     }
 }
+
 
 const getVoucherId = async (req, res) => {
     try {
@@ -93,5 +98,5 @@ const deleteVoucher = async (req, res) => {
 }
 
 module.exports = {
-    createVoucher, getVoucher, getVoucherId, updateVoucher, deleteVoucher
+    createVoucher, getVoucher, getVoucherId, updateVoucher, deleteVoucher,
 }

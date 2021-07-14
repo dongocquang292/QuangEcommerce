@@ -4,6 +4,7 @@ const Item = db.item;
 const User = db.user;
 const cron = require('node-cron');
 const nodemailer = require('nodemailer');
+const { Op } = require("sequelize");
 
 const createFlashSale = async (req, res) => {
     try {
@@ -60,9 +61,13 @@ const getFlashSale = async (req, res) => {
         if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
             size = sizeAsNumber;
         }
+        const search = req.body.search;
         const flashSale = await FlashSale.findAndCountAll({
             limit: size,
-            offset: page * size
+            offset: page * size,
+            where: { flashSaleName: { [Op.like]: `%${search}%` } }, order: [
+                ['flashSaleName', 'ASC'],
+            ]
         });
         res.status(200).send({
             content: flashSale.rows,
@@ -127,10 +132,9 @@ const notification = async (req, res) => {
                 const mailOptions = {
                     from: 'hoahongden7749@gmail.com',
                     to: "quangdn@vmodev.com",
-                    subject: 'Mail thong bao',
+                    subject: 'FLASH SALE',
                     text: `15p nua co flash sale`
                 };
-                console.log(mailOptions);
                 transporter.sendMail(mailOptions, function (error, info) {
 
                     if (error) {

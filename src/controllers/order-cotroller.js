@@ -58,7 +58,7 @@ const getOrder = async (req, res) => {
 const getOrderId = async (req, res) => {
     try {
         const id = req.params.id;
-        const order = await Order.findOne({ include: [{ model: Item, attributes: ['price'] }] }, { where: { id: id } });
+        const order = await Order.findOne({ include: [{ model: OrderDetail, attributes: ['price', 'quantity', 'itemName'] }] }, { where: { id: id } });
 
         res.status(200).send(order)
     } catch (error) {

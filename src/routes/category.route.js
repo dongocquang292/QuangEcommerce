@@ -2,8 +2,9 @@ const CategoryController = require("../controllers/category-controller");
 const CheckRole = require('../middleware/checkRole');
 const auth = require('../middleware/authJwt');
 const router = require("express").Router();
+const validateCategory = require('../middleware/validateCategory')
 
-router.post("/createCategory", auth.verifyToken, CheckRole.checkRole, CategoryController.createCategory);
+router.post("/createCategory", auth.verifyToken, CheckRole.checkRole, validateCategory.validateCreateCategory, CategoryController.createCategory);
 router.get("/getCategory", auth.verifyToken, CheckRole.checkRole, CategoryController.getCategory);
 router.get("/getCategory/:id", auth.verifyToken, CheckRole.checkRole, CategoryController.getCategoryId);
 router.put("/updateCategory/:id", auth.verifyToken, CheckRole.checkRole, CategoryController.updateCategory);

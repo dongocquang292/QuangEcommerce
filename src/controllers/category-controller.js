@@ -1,6 +1,6 @@
 const db = require("../models/index");
 const Category = db.category;
-
+const { Op } = require("sequelize");
 
 const createCategory = async (req, res) => {
     try {
@@ -38,9 +38,13 @@ const getCategory = async (req, res) => {
         if (!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber < 10) {
             size = sizeAsNumber;
         }
+        const search = req.body.search;
         const category = await Category.findAndCountAll({
             limit: size,
-            offset: page * size
+            offset: page * size,
+            where: { categoryName: { [Op.like]: `%${search}%` } }, order: [
+                ['categoryName', 'ASC'],
+            ]
         });
         res.status(200).send({
             content: category.rows,
@@ -50,6 +54,7 @@ const getCategory = async (req, res) => {
         res.status(400).send(error)
     }
 }
+
 
 const getCategoryId = async (req, res) => {
     try {
@@ -123,5 +128,5 @@ const getCategoryActive = async (req, res) => {
     }
 }
 module.exports = {
-    createCategory, getCategory, getCategoryId, updateCategory, deleteCategory, sortBanner, getCategoryActive
+    createCategory, getCategory, getCategoryId, updateCategory, deleteCategory, sortBanner, getCategoryActive,
 }

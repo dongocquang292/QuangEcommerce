@@ -39,7 +39,6 @@ const createOrderDetail = async (req, res) => {
             if (searchVoucher) {
 
                 if (Date.parse(searchVoucher.startTime) <= Date.now() && Date.parse(searchVoucher.stopTime) >= Date.now() && searchVoucher.quantity > 0) {
-                    console.log(12);
                     const priceUpdateOrderHaveVoucher = totalPriceFormOD - ((totalPriceFormOD * searchVoucher.discount) / 100);
                     await Order.update({ totalPrice: priceUpdateOrderHaveVoucher }, { where: { id: orderDT.orderId } });
                 } else {

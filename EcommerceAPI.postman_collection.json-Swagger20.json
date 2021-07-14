@@ -1,0 +1,1875 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "EcommerceAPI",
+    "contact": {}
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/register": {
+      "post": {
+        "summary": "register user",
+        "tags": [
+          "User"
+        ],
+        "operationId": "registeruser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/registeruserrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "summary": "login user",
+        "tags": [
+          "User"
+        ],
+        "operationId": "loginuser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/loginuserrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/user/getAllUser": {
+      "get": {
+        "summary": "get user",
+        "tags": [
+          "User"
+        ],
+        "operationId": "getuser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/user/4": {
+      "get": {
+        "summary": "get user id",
+        "tags": [
+          "User"
+        ],
+        "operationId": "getuserid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/user/1": {
+      "put": {
+        "summary": "update user",
+        "tags": [
+          "User"
+        ],
+        "operationId": "updateuser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/updateuserrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      },
+      "get": {
+        "summary": "detele user",
+        "tags": [
+          "User"
+        ],
+        "operationId": "deteleuser",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/user/verifyTokenEmail/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6MSwiaWF0IjoxNjI2Mjk3NTUwLCJleHAiOjE2MjYzODM5NTB9.OdEPj_ki4m4t1IYyECfNEY7jEEmCtBtKDIqyrxI4Ni8": {
+      "post": {
+        "summary": "verify token email",
+        "tags": [
+          "User"
+        ],
+        "operationId": "verifytokenemail",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/verifytokenemailrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/category/createCategory": {
+      "post": {
+        "summary": "create category",
+        "tags": [
+          "category"
+        ],
+        "operationId": "createcategory",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/createcategoryrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/category/getCategory": {
+      "get": {
+        "summary": "get category",
+        "tags": [
+          "category"
+        ],
+        "operationId": "getcategory",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/category/getCategory/1": {
+      "get": {
+        "summary": "get category id",
+        "tags": [
+          "category"
+        ],
+        "operationId": "getcategoryid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/category/updateCategory/1": {
+      "put": {
+        "summary": "update category",
+        "tags": [
+          "category"
+        ],
+        "operationId": "updatecategory",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/updatecategoryrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete category",
+        "tags": [
+          "category"
+        ],
+        "operationId": "deletecategory",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/category/sortBanner": {
+      "get": {
+        "summary": "sort Banner",
+        "tags": [
+          "category"
+        ],
+        "operationId": "sortBanner",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/category/getCategoryActive": {
+      "get": {
+        "summary": "get category active",
+        "tags": [
+          "category"
+        ],
+        "operationId": "getcategoryactive",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/item/createItem": {
+      "post": {
+        "summary": "create item",
+        "tags": [
+          "item"
+        ],
+        "operationId": "createitem",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "itemName",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "barcode",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "importPrice",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "weight",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "thumbnail",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "numberWare",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "categoryId",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/item/getItem": {
+      "get": {
+        "summary": "get item",
+        "tags": [
+          "item"
+        ],
+        "operationId": "getitem",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/item/getItem/1": {
+      "get": {
+        "summary": "get item id",
+        "tags": [
+          "item"
+        ],
+        "operationId": "getitemid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/item/updateItem/1": {
+      "put": {
+        "summary": "update item",
+        "tags": [
+          "item"
+        ],
+        "operationId": "updateitem",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "itemname",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "barcode",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "importPrice",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "price",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          },
+          {
+            "name": "weight",
+            "in": "formData",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "description": ""
+          },
+          {
+            "name": "thumbnail",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "description",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "numberWare",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/item/deleteItem/1": {
+      "delete": {
+        "summary": "delete item",
+        "tags": [
+          "item"
+        ],
+        "operationId": "deleteitem",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/item/getImg/3": {
+      "get": {
+        "summary": "get img",
+        "tags": [
+          "item"
+        ],
+        "operationId": "getimg",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/flashSale/createFlashSale": {
+      "post": {
+        "summary": "create flash sale",
+        "tags": [
+          "flash sale"
+        ],
+        "operationId": "createflashsale",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/createflashsalerequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/flashSale/getFlashSale": {
+      "get": {
+        "summary": "get flash Sale",
+        "tags": [
+          "flash sale"
+        ],
+        "operationId": "getflashSale",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/flashSale/getFlashSale/1": {
+      "get": {
+        "summary": "get flash Sale ID",
+        "tags": [
+          "flash sale"
+        ],
+        "operationId": "getflashSaleID",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/flashSale/updateFlashSale/1": {
+      "put": {
+        "summary": "update flash sale",
+        "tags": [
+          "flash sale"
+        ],
+        "operationId": "updateflashsale",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/updateflashsalerequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/flashSale/deleteFlashSale/1": {
+      "delete": {
+        "summary": "delete flash Sale",
+        "tags": [
+          "flash sale"
+        ],
+        "operationId": "deleteflashSale",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/flashSale/notification": {
+      "post": {
+        "summary": "notification",
+        "tags": [
+          "flash sale"
+        ],
+        "operationId": "notification",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/orderDetail/createOD": {
+      "post": {
+        "summary": "create order detail",
+        "tags": [
+          "order detail"
+        ],
+        "operationId": "createorderdetail",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/createorderdetailrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/orderDetail/getOD": {
+      "get": {
+        "summary": "get order detail",
+        "tags": [
+          "order detail"
+        ],
+        "operationId": "getorderdetail",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/orderDetail/getOD/1": {
+      "get": {
+        "summary": "get order detail id",
+        "tags": [
+          "order detail"
+        ],
+        "operationId": "getorderdetailid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/orderDetail/updateOD/2": {
+      "put": {
+        "summary": "update order detail",
+        "tags": [
+          "order detail"
+        ],
+        "operationId": "updateorderdetail",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/updateorderdetailrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/orderDetail/deleteOD/2": {
+      "delete": {
+        "summary": "delete order detail",
+        "tags": [
+          "order detail"
+        ],
+        "operationId": "deleteorderdetail",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/order/createOrder": {
+      "post": {
+        "summary": "create order",
+        "tags": [
+          "order"
+        ],
+        "operationId": "createorder",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/createorderrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/order/getOrder": {
+      "get": {
+        "summary": "get order",
+        "tags": [
+          "order"
+        ],
+        "operationId": "getorder",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/order/getOrder/1": {
+      "get": {
+        "summary": "get order id",
+        "tags": [
+          "order"
+        ],
+        "operationId": "getorderid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/order/deleteOrder/1": {
+      "delete": {
+        "summary": "delete order",
+        "tags": [
+          "order"
+        ],
+        "operationId": "deleteorder",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/voucher/createVoucher": {
+      "post": {
+        "summary": "create voucher",
+        "tags": [
+          "voucher"
+        ],
+        "operationId": "createvoucher",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/createvoucherrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/voucher/getVoucher": {
+      "get": {
+        "summary": "get voucher",
+        "tags": [
+          "voucher"
+        ],
+        "operationId": "getvoucher",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/voucher/getVoucher/1": {
+      "get": {
+        "summary": "get voucher id",
+        "tags": [
+          "voucher"
+        ],
+        "operationId": "getvoucherid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/voucher/updateVoucher/1": {
+      "put": {
+        "summary": "update voucher",
+        "tags": [
+          "voucher"
+        ],
+        "operationId": "updatevoucher",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "required": true,
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/updatevoucherrequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/voucher/deleteVoucher/1": {
+      "delete": {
+        "summary": "delete voucher",
+        "tags": [
+          "voucher"
+        ],
+        "operationId": "deletevoucher",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/image/createImage": {
+      "post": {
+        "summary": "create image",
+        "tags": [
+          "image"
+        ],
+        "operationId": "createimage",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "img",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "itemId",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/image/getImage": {
+      "get": {
+        "summary": "get all image",
+        "tags": [
+          "image"
+        ],
+        "operationId": "getallimage",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/image/getImage/1": {
+      "get": {
+        "summary": "get image with id",
+        "tags": [
+          "image"
+        ],
+        "operationId": "getimagewithid",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/image/updateImage/1": {
+      "put": {
+        "summary": "update image",
+        "tags": [
+          "image"
+        ],
+        "operationId": "updateimage",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "img",
+            "in": "formData",
+            "required": true,
+            "type": "string",
+            "description": ""
+          },
+          {
+            "name": "itemId",
+            "in": "formData",
+            "required": true,
+            "type": "integer",
+            "format": "int32",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    },
+    "/image/deleteImage/1": {
+      "delete": {
+        "summary": "delete img",
+        "tags": [
+          "image"
+        ],
+        "operationId": "deleteimg",
+        "deprecated": false,
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "type": "string",
+            "description": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "registeruserrequest": {
+      "title": "registeruserrequest",
+      "example": {
+        "username": "quangdo123",
+        "email": "quangdo123@gmail.com",
+        "password": "12345",
+        "phonenumber": 32999995,
+        "address": "Hanoi"
+      },
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        },
+        "phonenumber": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "address": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "username",
+        "email",
+        "password",
+        "phonenumber",
+        "address"
+      ]
+    },
+    "loginuserrequest": {
+      "title": "loginuserrequest",
+      "example": {
+        "email": "quangdo123@gmail.com",
+        "password": "12345"
+      },
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "email",
+        "password"
+      ]
+    },
+    "updateuserrequest": {
+      "title": "updateuserrequest",
+      "example": {
+        "username": "Hoa"
+      },
+      "type": "object",
+      "properties": {
+        "username": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "username"
+      ]
+    },
+    "verifytokenemailrequest": {
+      "title": "verifytokenemailrequest",
+      "example": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Mywicm9sZSI6MSwiaWF0IjoxNjI2Mjk3NTUwLCJleHAiOjE2MjYzODM5NTB9.OdEPj_ki4m4t1IYyECfNEY7jEEmCtBtKDIqyrxI4Ni8"
+      },
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "token"
+      ]
+    },
+    "createcategoryrequest": {
+      "title": "createcategoryrequest",
+      "example": {
+        "categoryName": "do an",
+        "location": 3,
+        "status": 1
+      },
+      "type": "object",
+      "properties": {
+        "categoryName": {
+          "type": "string"
+        },
+        "location": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "categoryName",
+        "location",
+        "status"
+      ]
+    },
+    "updatecategoryrequest": {
+      "title": "updatecategoryrequest",
+      "example": {
+        "categoryName": "công nghệ",
+        "location": 5,
+        "status": 1
+      },
+      "type": "object",
+      "properties": {
+        "categoryName": {
+          "type": "string"
+        },
+        "location": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "status": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "categoryName",
+        "location",
+        "status"
+      ]
+    },
+    "createflashsalerequest": {
+      "title": "createflashsalerequest",
+      "example": {
+        "flashSaleName": "FS8-3",
+        "startTime": "2021-07-15T03:30:00",
+        "stopTime": "2021-07-15T04:55:00",
+        "discount": 10,
+        "amount": 12,
+        "idItems": [
+          1,
+          2,
+          3
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "flashSaleName": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string"
+        },
+        "stopTime": {
+          "type": "string"
+        },
+        "discount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "idItems": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "required": [
+        "flashSaleName",
+        "startTime",
+        "stopTime",
+        "discount",
+        "amount",
+        "idItems"
+      ]
+    },
+    "updateflashsalerequest": {
+      "title": "updateflashsalerequest",
+      "example": {
+        "flashSaleName": "Fs20-11",
+        "startTime": "2021-07-15T03:30:00",
+        "stopTime": "2021-07-15T04:55:00",
+        "discount": 10,
+        "amount": 12,
+        "idItems": [
+          1,
+          2,
+          3
+        ]
+      },
+      "type": "object",
+      "properties": {
+        "flashSaleName": {
+          "type": "string"
+        },
+        "startTime": {
+          "type": "string"
+        },
+        "stopTime": {
+          "type": "string"
+        },
+        "discount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "amount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "idItems": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "required": [
+        "flashSaleName",
+        "startTime",
+        "stopTime",
+        "discount",
+        "amount",
+        "idItems"
+      ]
+    },
+    "createorderdetailrequest": {
+      "title": "createorderdetailrequest",
+      "example": {
+        "quantity": 1,
+        "orderId": 1,
+        "itemId": 2
+      },
+      "type": "object",
+      "properties": {
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "orderId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "itemId": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "quantity",
+        "orderId",
+        "itemId"
+      ]
+    },
+    "updateorderdetailrequest": {
+      "title": "updateorderdetailrequest",
+      "example": {
+        "price": 999,
+        "quantity": 12
+      },
+      "type": "object",
+      "properties": {
+        "price": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        }
+      },
+      "required": [
+        "price",
+        "quantity"
+      ]
+    },
+    "createorderrequest": {
+      "title": "createorderrequest",
+      "example": {
+        "userId": 1,
+        "orderDetailId": null,
+        "codeVoucher": "ABC123"
+      },
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "orderDetailId": {
+          "type": "string"
+        },
+        "codeVoucher": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "userId",
+        "orderDetailId",
+        "codeVoucher"
+      ]
+    },
+    "createvoucherrequest": {
+      "title": "createvoucherrequest",
+      "example": {
+        "code": "ABC123",
+        "quantity": 12,
+        "discount": 10,
+        "startTime": "2021-07-15T03:00:00",
+        "stopTime": "2021-07-15T12:55:00"
+      },
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "discount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "startTime": {
+          "type": "string"
+        },
+        "stopTime": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "quantity",
+        "discount",
+        "startTime",
+        "stopTime"
+      ]
+    },
+    "updatevoucherrequest": {
+      "title": "updatevoucherrequest",
+      "example": {
+        "code": "134AGBF",
+        "quantity": 20,
+        "discount": 12,
+        "startTime": "2021-7-5 2:22:0",
+        "stopTime": "2021-7-5 4:7:0"
+      },
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "quantity": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "discount": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "startTime": {
+          "type": "string"
+        },
+        "stopTime": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "code",
+        "quantity",
+        "discount",
+        "startTime",
+        "stopTime"
+      ]
+    }
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "category"
+    },
+    {
+      "name": "item"
+    },
+    {
+      "name": "flash sale"
+    },
+    {
+      "name": "order detail"
+    },
+    {
+      "name": "order"
+    },
+    {
+      "name": "voucher"
+    },
+    {
+      "name": "image"
+    }
+  ]
+}
