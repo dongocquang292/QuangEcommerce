@@ -1,4 +1,4 @@
-# VMOF8-QuangEcommerce
+# QuangEcommerce
 Project Website bán hàng 
 Các chức năng:
 - Thêm sửa xóa user, item, category
